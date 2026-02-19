@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Entities — Complete Reference</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050510;
+      --card: rgba(255,255,255,0.04);
+      --card-hover: rgba(255,255,255,0.09);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(130,100,255,0.5);
+      --text: #e8e4ff;
+      --muted: rgba(232,228,255,0.45);
+      --accent1: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #f43f5e;
+      --accent4: #10b981;
+      --accent5: #f59e0b;
+      --accent6: #8b5cf6;
+      --glow: rgba(124,58,237,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Animated background ── */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-canvas::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(124,58,237,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(6,182,212,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(244,63,94,0.08) 0%, transparent 60%);
+      animation: bgShift 14s ease-in-out infinite alternate;
+    }
+    .bg-canvas::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    @keyframes bgShift {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      33%  { transform: translate(3%,5%) rotate(4deg); }
+      66%  { transform: translate(-4%,2%) rotate(-3deg); }
+      100% { transform: translate(2%,-4%) rotate(2deg); }
+    }
+
+    /* ── Floating orbs ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat linear infinite;
+    }
+    .orb1 { width: 420px; height: 420px; background: var(--accent1); top: -10%; left: -10%; animation-duration: 20s; }
+    .orb2 { width: 320px; height: 320px; background: var(--accent2); bottom: 5%; right: -5%; animation-duration: 26s; animation-delay: -8s; }
+    .orb3 { width: 260px; height: 260px; background: var(--accent3); top: 50%; left: 40%; animation-duration: 17s; animation-delay: -4s; }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-40px) scale(1.1); }
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+      animation: fadeDown 0.8s ease both;
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.3));
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 999px;
+      padding: 0.35rem 1.1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 45%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-lbl { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── Search ── */
+    .search-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,16,0.75);
+      border-bottom: 1px solid var(--border);
+      animation: fadeDown 0.9s ease 0.1s both;
+    }
+    .search-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      position: relative;
+    }
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    #searchInput {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.8rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.25s;
+    }
+    #searchInput:focus {
+      border-color: var(--accent1);
+      background: rgba(124,58,237,0.1);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    }
+    #searchInput::placeholder { color: var(--muted); }
+    .result-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: scroll;
+    }
+    .tab-btn {
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: rgba(124,58,237,0.2);
+      border-color: var(--accent1);
+      color: #c4b5fd;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 3.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-icon {
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .section-count {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+    }
+
+    /* ── Grid & Card ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.6rem;
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 0.75rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(.23,1,.32,1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      text-align: center;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.12), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:active {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.2), 0 0 0 1px rgba(124,58,237,0.15);
+    }
+    .card:active::before { opacity: 1; }
+    .card:active { transform: translateY(-1px) scale(0.99); }
+
+    .card-char {
+      font-size: 1.7rem;
+      line-height: 1;
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent2);
+      word-break: break-all;
+      font-weight: 600;
+    }
+    .card-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+    }
+    .card-desc {
+      font-size: 0.58rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .copy-hint {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      font-size: 0.6rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      color: var(--muted);
+    }
+    .card:hover .copy-hint { opacity: 1; }
+
+    /* ── Copy flash ── */
+    .card.copied {
+      border-color: var(--accent4) !important;
+      background: rgba(16,185,129,0.08) !important;
+      animation: copyPop 0.4s ease;
+    }
+    @keyframes copyPop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.06); }
+      100% { transform: scale(1.02); }
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: linear-gradient(135deg, rgba(16,185,129,0.95), rgba(6,182,212,0.95));
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 999px;
+      z-index: 9999;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), opacity 0.35s;
+      opacity: 0;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(16,185,129,0.35);
+      white-space: nowrap;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── No results ── */
+    #noResults {
+      display: none;
+      text-align: center;
+      padding: 5rem 2rem;
+      color: var(--muted);
+    }
+    #noResults .nr-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    #noResults h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    #noResults p { font-size: 0.88rem; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.4); border-radius: 999px; }
+
+    /* ── Category color accents ── */
+    [data-cat="essential"] .card-name { color: var(--accent3); }
+    [data-cat="currency"] .card-name  { color: var(--accent5); }
+    [data-cat="math"] .card-name      { color: var(--accent2); }
+    [data-cat="arrows"] .card-name    { color: #34d399; }
+    [data-cat="greek"] .card-name     { color: #a78bfa; }
+    [data-cat="latin"] .card-name     { color: var(--accent2); }
+    [data-cat="punct"] .card-name     { color: #fb923c; }
+    [data-cat="symbols"] .card-name   { color: #e879f9; }
+    [data-cat="shapes"] .card-name    { color: #38bdf8; }
+    [data-cat="dingbats"] .card-name  { color: #fb7185; }
+    [data-cat="tech"] .card-name      { color: #4ade80; }
+    [data-cat="cards"] .card-name     { color: #fbbf24; }
+    [data-cat="chess"] .card-name     { color: #94a3b8; }
+    [data-cat="misc"] .card-name      { color: var(--accent1); }
+
+    /* ── Section animations stagger ── */
+    .section:nth-child(1)  { animation-delay: 0.05s; }
+    .section:nth-child(2)  { animation-delay: 0.10s; }
+    .section:nth-child(3)  { animation-delay: 0.15s; }
+    .section:nth-child(4)  { animation-delay: 0.20s; }
+    .section:nth-child(5)  { animation-delay: 0.25s; }
+    .section:nth-child(6)  { animation-delay: 0.30s; }
+    .section:nth-child(7)  { animation-delay: 0.35s; }
+    .section:nth-child(8)  { animation-delay: 0.40s; }
+    .section:nth-child(9)  { animation-delay: 0.45s; }
+    .section:nth-child(10) { animation-delay: 0.50s; }
+    .section:nth-child(11) { animation-delay: 0.55s; }
+    .section:nth-child(12) { animation-delay: 0.60s; }
+    .section:nth-child(13) { animation-delay: 0.65s; }
+    .section:nth-child(14) { animation-delay: 0.70s; }
+  </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-canvas"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- Search Bar -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input id="searchInput" type="text" placeholder="Search entity name, code, or symbol…" autocomplete="off" spellcheck="false" />
+    </div>
+    <span class="result-count" id="resultCount">2231 entities</span>
+    <div class="filter-tabs" id="filterTabs">
+      <button class="tab-btn active" data-filter="all">All</button>
+      <button class="tab-btn" data-filter="essential">Essential</button>
+      <button class="tab-btn" data-filter="currency">Currency</button>
+      <button class="tab-btn" data-filter="math">Math</button>
+      <button class="tab-btn" data-filter="arrows">Arrows</button>
+      <button class="tab-btn" data-filter="greek">Greek</button>
+      <button class="tab-btn" data-filter="latin">Latin</button>
+      <button class="tab-btn" data-filter="punct">Punctuation</button>
+      <button class="tab-btn" data-filter="symbols">Symbols</button>
+      <button class="tab-btn" data-filter="shapes">Shapes</button>
+      <button class="tab-btn" data-filter="tech">Technical</button>
+      <button class="tab-btn" data-filter="dingbats">Dingbats</button>
+      <button class="tab-btn" data-filter="cards">Cards</button>
+      <button class="tab-btn" data-filter="chess">Chess</button>
+      <button class="tab-btn" data-filter="misc">Misc</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="wrapper">
+  <header class="hero">
+    <div class="hero-badge">Complete HTML5 Reference</div>
+    <h1>HTML Entities</h1>
+    <p>Every named HTML entity at your fingertips. Click any card to copy the entity code instantly.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num" id="totalStat">2231</div><div class="stat-lbl">Total Entities</div></div>
+      <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">Categories</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Copy Formats</div></div>
+    </div>
+  </header>
+
+  <!-- Entities rendered by JS -->
+  <div id="entitiesRoot"></div>
+  <div id="noResults">
+    <div class="nr-icon">🔍</div>
+    <h3>No entities found</h3>
+    <p>Try a different search term or clear your filter.</p>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast">Copied!</div>
+<footer>
+  <p>Copyright © 2026 Bilal Ahmad Bahij. All rights reserved.</p>
+</footer>
+<script>
+// ─── Data ────────────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  {
+    id: 'essential', label: 'Essential Characters', icon: '⚡',
+    color: '#f43f5e',
+    items: [
+      ['&amp;', '&#38;', '&', 'Ampersand'],
+      ['&lt;', '&#60;', '<', 'Less-than sign'],
+      ['&gt;', '&#62;', '>', 'Greater-than sign'],
+      ['&quot;', '&#34;', '"', 'Quotation mark'],
+      ['&apos;', '&#39;', "'", 'Apostrophe'],
+      ['&nbsp;', '&#160;', '\u00a0', 'Non-breaking space'],
+      ['&shy;', '&#173;', '\u00ad', 'Soft hyphen'],
+      ['&zwj;', '&#8205;', '\u200d', 'Zero-width joiner'],
+      ['&zwnj;', '&#8204;', '\u200c', 'Zero-width non-joiner'],
+    ]
+  },
+  {
+    id: 'currency', label: 'Currency Symbols', icon: '💰',
+    color: '#f59e0b',
+    items: [
+      ['&cent;', '&#162;', '¢', 'Cent sign'],
+      ['&pound;', '&#163;', '£', 'Pound sign'],
+      ['&curren;', '&#164;', '¤', 'Currency sign'],
+      ['&yen;', '&#165;', '¥', 'Yen sign'],
+      ['&euro;', '&#8364;', '€', 'Euro sign'],
+      ['&dollar;', '&#36;', '$', 'Dollar sign'],
+      ['&fnof;', '&#402;', 'ƒ', 'Florin sign'],
+      ['&baht;', '&#3647;', '฿', 'Thai baht'],
+    ]
+  },
+  {
+    id: 'latin', label: 'Latin Extended — A', icon: '🔤',
+    color: '#06b6d4',
+    items: [
+      ['&Agrave;','&#192;','À','A with grave'],['&Aacute;','&#193;','Á','A with acute'],
+      ['&Acirc;','&#194;','Â','A with circumflex'],['&Atilde;','&#195;','Ã','A with tilde'],
+      ['&Auml;','&#196;','Ä','A with diaeresis'],['&Aring;','&#197;','Å','A with ring'],
+      ['&AElig;','&#198;','Æ','AE ligature'],['&Ccedil;','&#199;','Ç','C with cedilla'],
+      ['&Egrave;','&#200;','È','E with grave'],['&Eacute;','&#201;','É','E with acute'],
+      ['&Ecirc;','&#202;','Ê','E with circumflex'],['&Euml;','&#203;','Ë','E with diaeresis'],
+      ['&Igrave;','&#204;','Ì','I with grave'],['&Iacute;','&#205;','Í','I with acute'],
+      ['&Icirc;','&#206;','Î','I with circumflex'],['&Iuml;','&#207;','Ï','I with diaeresis'],
+      ['&ETH;','&#208;','Ð','Latin capital Eth'],['&Ntilde;','&#209;','Ñ','N with tilde'],
+      ['&Ograve;','&#210;','Ò','O with grave'],['&Oacute;','&#211;','Ó','O with acute'],
+      ['&Ocirc;','&#212;','Ô','O with circumflex'],['&Otilde;','&#213;','Õ','O with tilde'],
+      ['&Ouml;','&#214;','Ö','O with diaeresis'],['&Oslash;','&#216;','Ø','O with stroke'],
+      ['&Ugrave;','&#217;','Ù','U with grave'],['&Uacute;','&#218;','Ú','U with acute'],
+      ['&Ucirc;','&#219;','Û','U with circumflex'],['&Uuml;','&#220;','Ü','U with diaeresis'],
+      ['&Yacute;','&#221;','Ý','Y with acute'],['&THORN;','&#222;','Þ','Latin capital Thorn'],
+      ['&szlig;','&#223;','ß','Sharp s'],
+      ['&agrave;','&#224;','à','a with grave'],['&aacute;','&#225;','á','a with acute'],
+      ['&acirc;','&#226;','â','a with circumflex'],['&atilde;','&#227;','ã','a with tilde'],
+      ['&auml;','&#228;','ä','a with diaeresis'],['&aring;','&#229;','å','a with ring'],
+      ['&aelig;','&#230;','æ','ae ligature'],['&ccedil;','&#231;','ç','c with cedilla'],
+      ['&egrave;','&#232;','è','e with grave'],['&eacute;','&#233;','é','e with acute'],
+      ['&ecirc;','&#234;','ê','e with circumflex'],['&euml;','&#235;','ë','e with diaeresis'],
+      ['&igrave;','&#236;','ì','i with grave'],['&iacute;','&#237;','í','i with acute'],
+      ['&icirc;','&#238;','î','i with circumflex'],['&iuml;','&#239;','ï','i with diaeresis'],
+      ['&eth;','&#240;','ð','Latin small eth'],['&ntilde;','&#241;','ñ','n with tilde'],
+      ['&ograve;','&#242;','ò','o with grave'],['&oacute;','&#243;','ó','o with acute'],
+      ['&ocirc;','&#244;','ô','o with circumflex'],['&otilde;','&#245;','õ','o with tilde'],
+      ['&ouml;','&#246;','ö','o with diaeresis'],['&oslash;','&#248;','ø','o with stroke'],
+      ['&ugrave;','&#249;','ù','u with grave'],['&uacute;','&#250;','ú','u with acute'],
+      ['&ucirc;','&#251;','û','u with circumflex'],['&uuml;','&#252;','ü','u with diaeresis'],
+      ['&yacute;','&#253;','ý','y with acute'],['&thorn;','&#254;','þ','Latin small thorn'],
+      ['&yuml;','&#255;','ÿ','y with diaeresis'],
+      ['&OElig;','&#338;','Œ','OE ligature'],['&oelig;','&#339;','œ','oe ligature'],
+      ['&Scaron;','&#352;','Š','S with caron'],['&scaron;','&#353;','š','s with caron'],
+      ['&Yuml;','&#376;','Ÿ','Y with diaeresis'],
+    ]
+  },
+  {
+    id: 'punct', label: 'Punctuation', icon: '✍',
+    color: '#fb923c',
+    items: [
+      ['&iexcl;','&#161;','¡','Inverted exclamation'],
+      ['&iquest;','&#191;','¿','Inverted question mark'],
+      ['&laquo;','&#171;','«','Left angle quotation'],
+      ['&raquo;','&#187;','»','Right angle quotation'],
+      ['&lsquo;','&#8216;','\u2018','Left single quotation'],
+      ['&rsquo;','&#8217;','\u2019','Right single quotation'],
+      ['&ldquo;','&#8220;','\u201c','Left double quotation'],
+      ['&rdquo;','&#8221;','\u201d','Right double quotation'],
+      ['&sbquo;','&#8218;','\u201a','Single low-9 quotation'],
+      ['&bdquo;','&#8222;','\u201e','Double low-9 quotation'],
+      ['&lsaquo;','&#8249;','\u2039','Single left angle quotation'],
+      ['&rsaquo;','&#8250;','\u203a','Single right angle quotation'],
+      ['&mdash;','&#8212;','\u2014','Em dash'],
+      ['&ndash;','&#8211;','\u2013','En dash'],
+      ['&horbar;','&#8213;','\u2015','Horizontal bar'],
+      ['&hellip;','&#8230;','\u2026','Horizontal ellipsis'],
+      ['&middot;','&#183;','·','Middle dot'],
+      ['&bull;','&#8226;','\u2022','Bullet'],
+      ['&prime;','&#8242;','\u2032','Prime'],
+      ['&Prime;','&#8243;','\u2033','Double prime'],
+      ['&oline;','&#8254;','\u203e','Overline'],
+      ['&frasl;','&#8260;','\u2044','Fraction slash'],
+      ['&permil;','&#8240;','\u2030','Per mille sign'],
+      ['&perp;','&#8869;','\u22a5','Perpendicular'],
+      ['&dagger;','&#8224;','\u2020','Dagger'],
+      ['&Dagger;','&#8225;','\u2021','Double dagger'],
+      ['&sect;','&#167;','§','Section sign'],
+      ['&para;','&#182;','¶','Pilcrow sign'],
+      ['&ordf;','&#170;','ª','Feminine ordinal indicator'],
+      ['&ordm;','&#186;','º','Masculine ordinal indicator'],
+    ]
+  },
+  {
+    id: 'math', label: 'Mathematical Symbols', icon: '∑',
+    color: '#06b6d4',
+    items: [
+      ['&plus;','&#43;','+','Plus sign'],
+      ['&minus;','&#8722;','\u2212','Minus sign'],
+      ['&times;','&#215;','×','Multiplication sign'],
+      ['&divide;','&#247;','÷','Division sign'],
+      ['&plusmn;','&#177;','±','Plus-minus sign'],
+      ['&lt;','&#60;','<','Less-than'],
+      ['&gt;','&#62;','>','Greater-than'],
+      ['&le;','&#8804;','\u2264','Less-than or equal'],
+      ['&ge;','&#8805;','\u2265','Greater-than or equal'],
+      ['&ne;','&#8800;','\u2260','Not equal to'],
+      ['&asymp;','&#8776;','\u2248','Almost equal to'],
+      ['&equiv;','&#8801;','\u2261','Identical to'],
+      ['&sim;','&#8764;','\u223c','Tilde operator'],
+      ['&cong;','&#8773;','\u2245','Approximately equal'],
+      ['&prop;','&#8733;','\u221d','Proportional to'],
+      ['&sum;','&#8721;','\u2211','N-ary summation'],
+      ['&prod;','&#8719;','\u220f','N-ary product'],
+      ['&infin;','&#8734;','\u221e','Infinity'],
+      ['&radic;','&#8730;','\u221a','Square root'],
+      ['&int;','&#8747;','\u222b','Integral'],
+      ['&part;','&#8706;','\u2202','Partial differential'],
+      ['&nabla;','&#8711;','\u2207','Nabla'],
+      ['&forall;','&#8704;','\u2200','For all'],
+      ['&exist;','&#8707;','\u2203','There exists'],
+      ['&nexist;','&#8708;','\u2204','There does not exist'],
+      ['&empty;','&#8709;','\u2205','Empty set'],
+      ['&isin;','&#8712;','\u2208','Element of'],
+      ['&notin;','&#8713;','\u2209','Not an element of'],
+      ['&ni;','&#8715;','\u220b','Contains as member'],
+      ['&sub;','&#8834;','\u2282','Subset of'],
+      ['&sup;','&#8835;','\u2283','Superset of'],
+      ['&sube;','&#8838;','\u2286','Subset of or equal to'],
+      ['&supe;','&#8839;','\u2287','Superset of or equal to'],
+      ['&cap;','&#8745;','\u2229','Intersection'],
+      ['&cup;','&#8746;','\u222a','Union'],
+      ['&and;','&#8743;','\u2227','Logical and'],
+      ['&or;','&#8744;','\u2228','Logical or'],
+      ['&not;','&#172;','¬','Not sign'],
+      ['&xor;','&#8891;','\u22bb','XOR'],
+      ['&oplus;','&#8853;','\u2295','Circled plus'],
+      ['&otimes;','&#8855;','\u2297','Circled times'],
+      ['&perp;','&#8869;','\u22a5','Perpendicular'],
+      ['&sdot;','&#8901;','\u22c5','Dot operator'],
+      ['&middot;','&#183;','·','Middle dot'],
+      ['&deg;','&#176;','°','Degree sign'],
+      ['&sup1;','&#185;','¹','Superscript one'],
+      ['&sup2;','&#178;','²','Superscript two'],
+      ['&sup3;','&#179;','³','Superscript three'],
+      ['&frac14;','&#188;','¼','Vulgar fraction one quarter'],
+      ['&frac12;','&#189;','½','Vulgar fraction one half'],
+      ['&frac34;','&#190;','¾','Vulgar fraction three quarters'],
+      ['&frac13;','&#8531;','\u2153','Vulgar fraction one third'],
+      ['&frac23;','&#8532;','\u2154','Vulgar fraction two thirds'],
+      ['&frac15;','&#8533;','\u2155','Vulgar fraction one fifth'],
+      ['&frac25;','&#8534;','\u2156','Vulgar fraction two fifths'],
+      ['&frac35;','&#8535;','\u2157','Vulgar fraction three fifths'],
+      ['&frac45;','&#8536;','\u2158','Vulgar fraction four fifths'],
+      ['&frac16;','&#8537;','\u2159','Vulgar fraction one sixth'],
+      ['&frac56;','&#8538;','\u215a','Vulgar fraction five sixths'],
+      ['&frac18;','&#8539;','\u215b','Vulgar fraction one eighth'],
+      ['&frac38;','&#8540;','\u215c','Vulgar fraction three eighths'],
+      ['&frac58;','&#8541;','\u215d','Vulgar fraction five eighths'],
+      ['&frac78;','&#8542;','\u215e','Vulgar fraction seven eighths'],
+    ]
+  },
+  {
+    id: 'arrows', label: 'Arrows', icon: '➡',
+    color: '#34d399',
+    items: [
+      ['&larr;','&#8592;','\u2190','Leftwards arrow'],
+      ['&uarr;','&#8593;','\u2191','Upwards arrow'],
+      ['&rarr;','&#8594;','\u2192','Rightwards arrow'],
+      ['&darr;','&#8595;','\u2193','Downwards arrow'],
+      ['&harr;','&#8596;','\u2194','Left right arrow'],
+      ['&crarr;','&#8629;','\u21b5','Down with leftwards return'],
+      ['&lArr;','&#8656;','\u21d0','Leftwards double arrow'],
+      ['&uArr;','&#8657;','\u21d1','Upwards double arrow'],
+      ['&rArr;','&#8658;','\u21d2','Rightwards double arrow'],
+      ['&dArr;','&#8659;','\u21d3','Downwards double arrow'],
+      ['&hArr;','&#8660;','\u21d4','Left right double arrow'],
+      ['&nlarr;','&#8602;','\u219a','Leftwards arrow with stroke'],
+      ['&nrarr;','&#8603;','\u219b','Rightwards arrow with stroke'],
+      ['&nlArr;','&#8653;','\u21cd','Leftwards double arrow with stroke'],
+      ['&nrArr;','&#8655;','\u21cf','Rightwards double arrow with stroke'],
+      ['&nhArr;','&#8654;','\u21ce','Left right double arrow with stroke'],
+      ['&lrhar;','&#8651;','\u21cb','Leftwards harpoon over rightwards'],
+      ['&rlhar;','&#8652;','\u21cc','Rightwards harpoon over leftwards'],
+      ['&lharu;','&#8636;','\u21bc','Leftwards harpoon with barb up'],
+      ['&lhard;','&#8637;','\u21bd','Leftwards harpoon with barb down'],
+      ['&rharu;','&#8640;','\u21c0','Rightwards harpoon with barb up'],
+      ['&rhard;','&#8641;','\u21c1','Rightwards harpoon with barb down'],
+      ['&uharr;','&#8638;','\u21be','Upwards harpoon with barb right'],
+      ['&uharl;','&#8639;','\u21bf','Upwards harpoon with barb left'],
+      ['&dharr;','&#8642;','\u21c2','Downwards harpoon with barb right'],
+      ['&dharl;','&#8643;','\u21c3','Downwards harpoon with barb left'],
+      ['&Map;','&#10501;','\u2905','Rightwards two-headed arrow from bar'],
+      ['&larrtl;','&#8610;','\u21a2','Leftwards arrow with tail'],
+      ['&rarrtl;','&#8611;','\u21a3','Rightwards arrow with tail'],
+      ['&LeftTeeArrow;','&#8612;','\u21a4','Leftwards arrow from bar'],
+      ['&RightTeeArrow;','&#8614;','\u21a6','Rightwards arrow from bar'],
+      ['&looparrowleft;','&#8619;','\u21ab','Leftwards arrow with loop'],
+      ['&looparrowright;','&#8620;','\u21ac','Rightwards arrow with loop'],
+      ['&curvearrowleft;','&#8630;','\u21b6','Anticlockwise top semicircle arrow'],
+      ['&curvearrowright;','&#8631;','\u21b7','Clockwise top semicircle arrow'],
+      ['&circlearrowleft;','&#8634;','\u21ba','Anticlockwise open circle arrow'],
+      ['&circlearrowright;','&#8635;','\u21bb','Clockwise open circle arrow'],
+      ['&Uarr;','&#8662;','\u21d1','Up double stroke arrow'],
+    ]
+  },
+  {
+    id: 'greek', label: 'Greek Letters', icon: 'Ω',
+    color: '#a78bfa',
+    items: [
+      ['&Alpha;','&#913;','Α','Greek capital Alpha'],
+      ['&Beta;','&#914;','Β','Greek capital Beta'],
+      ['&Gamma;','&#915;','Γ','Greek capital Gamma'],
+      ['&Delta;','&#916;','Δ','Greek capital Delta'],
+      ['&Epsilon;','&#917;','Ε','Greek capital Epsilon'],
+      ['&Zeta;','&#918;','Ζ','Greek capital Zeta'],
+      ['&Eta;','&#919;','Η','Greek capital Eta'],
+      ['&Theta;','&#920;','Θ','Greek capital Theta'],
+      ['&Iota;','&#921;','Ι','Greek capital Iota'],
+      ['&Kappa;','&#922;','Κ','Greek capital Kappa'],
+      ['&Lambda;','&#923;','Λ','Greek capital Lambda'],
+      ['&Mu;','&#924;','Μ','Greek capital Mu'],
+      ['&Nu;','&#925;','Ν','Greek capital Nu'],
+      ['&Xi;','&#926;','Ξ','Greek capital Xi'],
+      ['&Omicron;','&#927;','Ο','Greek capital Omicron'],
+      ['&Pi;','&#928;','Π','Greek capital Pi'],
+      ['&Rho;','&#929;','Ρ','Greek capital Rho'],
+      ['&Sigma;','&#931;','Σ','Greek capital Sigma'],
+      ['&Tau;','&#932;','Τ','Greek capital Tau'],
+      ['&Upsilon;','&#933;','Υ','Greek capital Upsilon'],
+      ['&Phi;','&#934;','Φ','Greek capital Phi'],
+      ['&Chi;','&#935;','Χ','Greek capital Chi'],
+      ['&Psi;','&#936;','Ψ','Greek capital Psi'],
+      ['&Omega;','&#937;','Ω','Greek capital Omega'],
+      ['&alpha;','&#945;','α','Greek small alpha'],
+      ['&beta;','&#946;','β','Greek small beta'],
+      ['&gamma;','&#947;','γ','Greek small gamma'],
+      ['&delta;','&#948;','δ','Greek small delta'],
+      ['&epsilon;','&#949;','ε','Greek small epsilon'],
+      ['&zeta;','&#950;','ζ','Greek small zeta'],
+      ['&eta;','&#951;','η','Greek small eta'],
+      ['&theta;','&#952;','θ','Greek small theta'],
+      ['&iota;','&#953;','ι','Greek small iota'],
+      ['&kappa;','&#954;','κ','Greek small kappa'],
+      ['&lambda;','&#955;','λ','Greek small lambda'],
+      ['&mu;','&#956;','μ','Greek small mu'],
+      ['&nu;','&#957;','ν','Greek small nu'],
+      ['&xi;','&#958;','ξ','Greek small xi'],
+      ['&omicron;','&#959;','ο','Greek small omicron'],
+      ['&pi;','&#960;','π','Greek small pi'],
+      ['&rho;','&#961;','ρ','Greek small rho'],
+      ['&sigmaf;','&#962;','ς','Greek small final sigma'],
+      ['&sigma;','&#963;','σ','Greek small sigma'],
+      ['&tau;','&#964;','τ','Greek small tau'],
+      ['&upsilon;','&#965;','υ','Greek small upsilon'],
+      ['&phi;','&#966;','φ','Greek small phi'],
+      ['&chi;','&#967;','χ','Greek small chi'],
+      ['&psi;','&#968;','ψ','Greek small psi'],
+      ['&omega;','&#969;','ω','Greek small omega'],
+      ['&thetasym;','&#977;','ϑ','Greek theta symbol'],
+      ['&upsih;','&#978;','ϒ','Greek upsilon with hook'],
+      ['&straightphi;','&#981;','ϕ','Greek phi symbol'],
+      ['&piv;','&#982;','ϖ','Greek pi symbol'],
+    ]
+  },
+  {
+    id: 'symbols', label: 'Symbols & Signs', icon: '©',
+    color: '#e879f9',
+    items: [
+      ['&copy;','&#169;','©','Copyright sign'],
+      ['&reg;','&#174;','®','Registered sign'],
+      ['&trade;','&#8482;','\u2122','Trade mark sign'],
+      ['&phone;','&#9742;','\u2622','Telephone symbol'],
+      ['&star;','&#9733;','\u2605','Black star'],
+      ['&starf;','&#9733;','\u2605','Black star filled'],
+      ['&nstar;','&#9734;','\u2606','White star'],
+      ['&phone;','&#9742;','\u260e','Black telephone'],
+      ['&check;','&#10003;','\u2713','Check mark'],
+      ['&checkmark;','&#10003;','\u2713','Check mark'],
+      ['&cross;','&#10007;','\u2717','Ballot X'],
+      ['&male;','&#9794;','\u2642','Male sign'],
+      ['&female;','&#9792;','\u2640','Female sign'],
+      ['&sun;','&#9728;','\u2600','Black sun with rays'],
+      ['&cloud;','&#9729;','\u2601','Cloud'],
+      ['&umbrella;','&#9730;','\u2602','Umbrella'],
+      ['&snowman;','&#9731;','\u2603','Snowman'],
+      ['&snowflake;','&#10052;','\u2744','Snowflake'],
+      ['&spade;','&#9824;','\u2660','Black spade suit'],
+      ['&clubs;','&#9827;','\u2663','Black club suit'],
+      ['&hearts;','&#9829;','\u2665','Black heart suit'],
+      ['&diams;','&#9830;','\u2666','Black diamond suit'],
+      ['&music;','&#9834;','\u266a','Eighth note'],
+      ['&flat;','&#9837;','\u266d','Music flat sign'],
+      ['&natural;','&#9838;','\u266e','Music natural sign'],
+      ['&sharp;','&#9839;','\u266f','Music sharp sign'],
+      ['&loz;','&#9674;','\u25ca','Lozenge'],
+      ['&macr;','&#175;','¯','Macron'],
+      ['&cedil;','&#184;','¸','Cedilla'],
+      ['&uml;','&#168;','¨','Diaeresis'],
+      ['&acute;','&#180;','´','Acute accent'],
+      ['&ring;','&#730;','\u02da','Ring above'],
+      ['&tilde;','&#732;','\u02dc','Small tilde'],
+      ['&circ;','&#710;','\u02c6','Circumflex accent modifier'],
+      ['&ensp;','&#8194;','\u2002','En space'],
+      ['&emsp;','&#8195;','\u2003','Em space'],
+      ['&thinsp;','&#8201;','\u2009','Thin space'],
+      ['&lrm;','&#8206;','\u200e','Left-to-right mark'],
+      ['&rlm;','&#8207;','\u200f','Right-to-left mark'],
+    ]
+  },
+  {
+    id: 'shapes', label: 'Geometric Shapes', icon: '◆',
+    color: '#38bdf8',
+    items: [
+      ['&square;','&#9632;','\u25a0','Black square'],
+      ['&square;','&#9633;','\u25a1','White square'],
+      ['&rect;','&#9645;','\u25ad','White rectangle'],
+      ['&bigcirc;','&#9711;','\u25ef','Large circle'],
+      ['&xcirc;','&#9711;','\u25ef','Large circle'],
+      ['&cir;','&#9675;','\u25cb','White circle'],
+      ['&cirF;','&#9670;','\u25c6','Black diamond'],
+      ['&ultri;','&#9720;','\u25f8','Upper left triangle'],
+      ['&urtri;','&#9721;','\u25f9','Upper right triangle'],
+      ['&lltri;','&#9722;','\u25fa','Lower left triangle'],
+      ['&EmptySmallSquare;','&#9723;','\u25fb','White medium small square'],
+      ['&FilledSmallSquare;','&#9724;','\u25fc','Black medium small square'],
+      ['&EmptyVerySmallSquare;','&#9725;','\u25fd','White medium square'],
+      ['&FilledVerySmallSquare;','&#9726;','\u25fe','Black medium square'],
+      ['&ltrif;','&#9668;','\u25c4','Black left-pointing small triangle'],
+      ['&rtrif;','&#9658;','\u25ba','Black right-pointing small triangle'],
+      ['&utrif;','&#9650;','\u25b2','Black up-pointing triangle'],
+      ['&dtrif;','&#9660;','\u25bc','Black down-pointing triangle'],
+      ['&ltri;','&#9667;','\u25c3','White left-pointing small triangle'],
+      ['&rtri;','&#9657;','\u25b9','White right-pointing small triangle'],
+      ['&utri;','&#9651;','\u25b3','White up-pointing triangle'],
+      ['&dtri;','&#9661;','\u25bd','White down-pointing triangle'],
+      ['&xutri;','&#9651;','\u25b3','White up-pointing triangle'],
+      ['&pentagonBar;','&#10041;','\u2739','Twelve pointed black star'],
+      ['&Congruent;','&#8801;','\u2261','Identical to / congruent'],
+      ['&squ;','&#9633;','\u25a1','Square'],
+    ]
+  },
+  {
+    id: 'tech', label: 'Technical Symbols', icon: '⌘',
+    color: '#4ade80',
+    items: [
+      ['&langle;','&#10216;','\u27e8','Mathematical left angle bracket'],
+      ['&rangle;','&#10217;','\u27e9','Mathematical right angle bracket'],
+      ['&lang;','&#10216;','\u27e8','Left angle bracket'],
+      ['&rang;','&#10217;','\u27e9','Right angle bracket'],
+      ['&lceil;','&#8968;','\u2308','Left ceiling'],
+      ['&rceil;','&#8969;','\u2309','Right ceiling'],
+      ['&lfloor;','&#8970;','\u230a','Left floor'],
+      ['&rfloor;','&#8971;','\u230b','Right floor'],
+      ['&llcorner;','&#8990;','\u231e','Lower left corner'],
+      ['&lrcorner;','&#8991;','\u231f','Lower right corner'],
+      ['&ulcorner;','&#8988;','\u231c','Upper left corner'],
+      ['&urcorner;','&#8989;','\u231d','Upper right corner'],
+      ['&top;','&#8868;','\u22a4','Down tack'],
+      ['&vdash;','&#8866;','\u22a2','Right tack'],
+      ['&dashv;','&#8867;','\u22a3','Left tack'],
+      ['&models;','&#8871;','\u22a7','Models'],
+      ['&vDash;','&#8872;','\u22a8','True'],
+      ['&Vdash;','&#8873;','\u22a9','Forces'],
+      ['&Vvdash;','&#8874;','\u22aa','Triple vertical bar right turnstile'],
+      ['&VDash;','&#8875;','\u22ab','Double vertical bar double right turnstile'],
+      ['&nvdash;','&#8876;','\u22ac','Does not prove'],
+      ['&nvDash;','&#8877;','\u22ad','Not true'],
+      ['&nVdash;','&#8878;','\u22ae','Does not force'],
+      ['&nVDash;','&#8879;','\u22af','Negated double vertical bar double right turnstile'],
+      ['&prurel;','&#8880;','\u22b0','Precedes under relation'],
+      ['&vltri;','&#8882;','\u22b2','Normal subgroup of'],
+      ['&vrtri;','&#8883;','\u22b3','Contains as normal subgroup'],
+      ['&ltimes;','&#8905;','\u22c9','Left normal factor semidirect product'],
+      ['&rtimes;','&#8906;','\u22ca','Right normal factor semidirect product'],
+      ['&lthree;','&#8907;','\u22cb','Left semidirect product'],
+      ['&rthree;','&#8908;','\u22cc','Right semidirect product'],
+      ['&bsime;','&#8909;','\u22cd','Reversed tilde equals'],
+      ['&cuvee;','&#8910;','\u22ce','Curly logical or'],
+      ['&cuwed;','&#8911;','\u22cf','Curly logical and'],
+    ]
+  },
+  {
+    id: 'dingbats', label: 'Dingbats & Ornamental', icon: '✦',
+    color: '#fb7185',
+    items: [
+      ['&dagger;','&#8224;','\u2020','Dagger'],
+      ['&Dagger;','&#8225;','\u2021','Double dagger'],
+      ['&bull;','&#8226;','\u2022','Bullet'],
+      ['&mldr;','&#8230;','\u2026','Horizontal ellipsis'],
+      ['&numsp;','&#8199;','\u2007','Figure space'],
+      ['&puncsp;','&#8200;','\u2008','Punctuation space'],
+      ['&hairsp;','&#8202;','\u200a','Hair space'],
+      ['&MediumSpace;','&#8287;','\u205f','Medium mathematical space'],
+      ['&NoBreak;','&#8288;','\u2060','Word joiner'],
+      ['&ApplyFunction;','&#8289;','\u2061','Function application'],
+      ['&InvisibleTimes;','&#8290;','\u2062','Invisible times'],
+      ['&InvisibleComma;','&#8291;','\u2063','Invisible separator'],
+      ['&scissors;','&#9988;','\u2704','Black scissors'],
+      ['&telephone;','&#9990;','\u2706','Telephone location sign'],
+      ['&maltese;','&#10016;','\u2720','Maltese cross'],
+      ['&starf;','&#9733;','\u2605','Black star'],
+      ['&nstar;','&#9734;','\u2606','White star'],
+      ['&sextile;','&#10038;','\u2736','Six pointed black star'],
+      ['&ast;','&#42;','*','Asterisk'],
+      ['&lowast;','&#8727;','\u2217','Asterisk operator'],
+      ['&wavy;','&#8776;','\u2248','Almost equal / wavy'],
+      ['&sung;','&#9834;','\u266a','Eighth note'],
+      ['&flat;','&#9837;','\u266d','Music flat sign'],
+      ['&natur;','&#9838;','\u266e','Music natural sign'],
+      ['&sharp;','&#9839;','\u266f','Music sharp sign'],
+      ['&check;','&#10003;','\u2713','Check mark'],
+      ['&cross;','&#10007;','\u2717','Ballot X'],
+      ['&malt;','&#10016;','\u2720','Maltese cross'],
+      ['&sext;','&#10038;','\u2736','Six pointed black star'],
+    ]
+  },
+  {
+    id: 'cards', label: 'Playing Cards', icon: '♠',
+    color: '#fbbf24',
+    items: [
+      ['&spades;','&#9824;','\u2660','Black spade suit'],
+      ['&clubs;','&#9827;','\u2663','Black club suit'],
+      ['&hearts;','&#9829;','\u2665','Black heart suit'],
+      ['&diams;','&#9830;','\u2666','Black diamond suit'],
+      ['&spadesuit;','&#9824;','\u2660','Spade suit'],
+      ['&clubsuit;','&#9827;','\u2663','Club suit'],
+      ['&heartsuit;','&#9829;','\u2665','Heart suit'],
+      ['&diamondsuit;','&#9830;','\u2666','Diamond suit'],
+    ]
+  },
+  {
+    id: 'chess', label: 'Chess Pieces', icon: '♛',
+    color: '#94a3b8',
+    items: [
+      ['&#9812;','&#9812;','\u2654','White chess king'],
+      ['&#9813;','&#9813;','\u2655','White chess queen'],
+      ['&#9814;','&#9814;','\u2656','White chess rook'],
+      ['&#9815;','&#9815;','\u2657','White chess bishop'],
+      ['&#9816;','&#9816;','\u2658','White chess knight'],
+      ['&#9817;','&#9817;','\u2659','White chess pawn'],
+      ['&#9818;','&#9818;','\u265a','Black chess king'],
+      ['&#9819;','&#9819;','\u265b','Black chess queen'],
+      ['&#9820;','&#9820;','\u265c','Black chess rook'],
+      ['&#9821;','&#9821;','\u265d','Black chess bishop'],
+      ['&#9822;','&#9822;','\u265e','Black chess knight'],
+      ['&#9823;','&#9823;','\u265f','Black chess pawn'],
+    ]
+  },
+  {
+    id: 'misc', label: 'Miscellaneous & Special', icon: '✨',
+    color: '#8b5cf6',
+    items: [
+      ['&micro;','&#181;','µ','Micro sign'],
+      ['&brvbar;','&#166;','¦','Broken bar'],
+      ['&macr;','&#175;','¯','Macron'],
+      ['&hibar;','&#175;','¯','Macron (Overline)'],
+      ['&cedil;','&#184;','¸','Cedilla'],
+      ['&sup1;','&#185;','¹','Superscript one'],
+      ['&frac12;','&#189;','½','One half'],
+      ['&frac14;','&#188;','¼','One quarter'],
+      ['&frac34;','&#190;','¾','Three quarters'],
+      ['&puncsp;','&#8200;','\u2008','Punctuation space'],
+      ['&blank;','&#9251;','\u2423','Open box'],
+      ['&demptyv;','&#10673;','\u29b1','Empty set with overbar'],
+      ['&infintie;','&#10717;','\u29dd','Tie over infinity'],
+      ['&nvinfin;','&#10718;','\u29de','Infinity negated with vertical bar'],
+      ['&eparsl;','&#10723;','\u29e3','Equals sign and slanted parallel'],
+      ['&smeparsl;','&#10724;','\u29e4','Equals sign and slanted parallel with tilde above'],
+      ['&eqvparsl;','&#10725;','\u29e5','Identical to and slanted parallel'],
+      ['&lozf;','&#10731;','\u29eb','Black lozenge'],
+      ['&RuleDelayed;','&#10740;','\u29f4','Rule-delayed'],
+      ['&dsol;','&#10742;','\u29f6','Solidus with overbar'],
+      ['&xsol;','&#10745;','\u29f9','Big reverse solidus'],
+      ['&telrec;','&#8981;','\u2315','Telephone recorder'],
+      ['&target;','&#8982;','\u2316','Position indicator'],
+      ['&smile;','&#8995;','\u2323','Smile'],
+      ['&ssmile;','&#8996;','\u2324','Up pointing nose'],
+      ['&lang;','&#10216;','\u27e8','Left angle bracket'],
+      ['&rang;','&#10217;','\u27e9','Right angle bracket'],
+      ['&marker;','&#9646;','\u25ee','Up pointing triangle with left half black'],
+      ['&race;','&#8765;','\u223d','Reversed tilde'],
+    ]
+  }
+];
+
+// ─── Build & Render ───────────────────────────────────────────────────────────
+const root = document.getElementById('entitiesRoot');
+let allCards = [];
+
+function buildAll() {
+  root.innerHTML = '';
+  allCards = [];
+
+  CATEGORIES.forEach((cat, ci) => {
+    const section = document.createElement('section');
+    section.className = 'section';
+    section.dataset.cat = cat.id;
+
+    const count = cat.items.length;
+    section.innerHTML = `
+      <div class="section-header">
+        <span class="section-icon" style="color:${cat.color}">${cat.icon}</span>
+        <span class="section-title" style="color:${cat.color}">${cat.label}</span>
+        <span class="section-count">${count}</span>
+      </div>
+      <div class="grid" data-grid="${cat.id}"></div>
+    `;
+
+    const grid = section.querySelector('.grid');
+
+    cat.items.forEach(([name, code, char, desc]) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.name = name.toLowerCase();
+      card.dataset.desc = desc.toLowerCase();
+      card.dataset.char = char;
+      card.dataset.cat = cat.id;
+      card.dataset.code = name;
+      card.innerHTML = `
+        <span class="copy-hint">click to copy</span>
+        <div class="card-char">${char}</div>
+        <div class="card-name">${name}</div>
+        <div class="card-code">${code}</div>
+        <div class="card-desc">${desc}</div>
+      `;
+      card.addEventListener('click', () => copyEntity(card, name));
+      grid.appendChild(card);
+      allCards.push(card);
+    });
+
+    root.appendChild(section);
+  });
+
+  updateCount(allCards.length);
+  document.getElementById('totalStat').textContent = allCards.length;
+}
+
+// ─── Copy ─────────────────────────────────────────────────────────────────────
+const toast = document.getElementById('toast');
+let toastTimer;
+
+function copyEntity(card, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    card.classList.add('copied');
+    setTimeout(() => card.classList.remove('copied'), 1000);
+    showToast(`Copied ${text}`);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    card.classList.add('copied');
+    setTimeout(() => card.classList.remove('copied'), 1000);
+    showToast(`Copied ${text}`);
+  });
+}
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ─── Search ───────────────────────────────────────────────────────────────────
+let activeFilter = 'all';
+
+function updateCount(n) {
+  document.getElementById('resultCount').textContent = `${n} entit${n === 1 ? 'y' : 'ies'}`;
+}
+
+function filterAll() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  let visible = 0;
+
+  document.querySelectorAll('.section').forEach(section => {
+    const catId = section.dataset.cat;
+    const cards = section.querySelectorAll('.card');
+    let secVisible = 0;
+
+    cards.forEach(card => {
+      const matchCat  = activeFilter === 'all' || card.dataset.cat === activeFilter;
+      const matchSearch = !q || card.dataset.name.includes(q) || card.dataset.desc.includes(q) || card.dataset.char.includes(q) || card.dataset.code.includes(q);
+      const show = matchCat && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) { secVisible++; visible++; }
+    });
+
+    section.style.display = secVisible > 0 ? '' : 'none';
+  });
+
+  updateCount(visible);
+  document.getElementById('noResults').style.display = visible === 0 ? 'flex' : 'none';
+}
+
+document.getElementById('searchInput').addEventListener('input', filterAll);
+
+document.getElementById('filterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  filterAll();
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+buildAll();
+</script>
+</body>
+</html>
